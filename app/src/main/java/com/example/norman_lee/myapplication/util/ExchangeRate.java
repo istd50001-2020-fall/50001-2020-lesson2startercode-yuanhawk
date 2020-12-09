@@ -1,4 +1,4 @@
-package com.example.norman_lee.myapplication;
+package com.example.norman_lee.myapplication.util;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -13,33 +13,37 @@ public class ExchangeRate {
     private MathContext mathContext;
 
 
-    ExchangeRate(){
+    public ExchangeRate(){
         exchangeRate = new BigDecimal(defaultRate);
         instantiateMathContext(DEFAULT_PRECISION);
     }
 
-    ExchangeRate(String exchangeRate){
+    public ExchangeRate(String exchangeRate){
         this.exchangeRate = new BigDecimal(exchangeRate);
         instantiateMathContext(DEFAULT_PRECISION);
     }
 
-    ExchangeRate(String home, String foreign) {
+    public ExchangeRate(String home, String foreign) {
+        BigDecimal homeVal = new BigDecimal(home);
+        BigDecimal foreignVal = new BigDecimal(foreign);
 
         instantiateMathContext(DEFAULT_PRECISION);
         //TODO 3.13a The constructor initializes exchangeRate by calculating the exchangeRate
-        exchangeRate = new BigDecimal(defaultRate);
+        exchangeRate = homeVal.divide(foreignVal, mathContext);
     }
 
-    BigDecimal getExchangeRate(){
+    public BigDecimal getExchangeRate(){
         return exchangeRate;
     }
 
-    BigDecimal calculateAmount(String foreign){
+    public BigDecimal calculateAmount(String foreign){
         //TODO 2.5a complete this method to return the amount
-        return BigDecimal.ZERO;
+        BigDecimal foreignVal = new BigDecimal(foreign);
+
+        return foreignVal.multiply(exchangeRate);
     }
 
-    void setPrecision(int precision){
+    public void setPrecision(int precision){
         this.precision = precision;
         instantiateMathContext(precision);
     }
